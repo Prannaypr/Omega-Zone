@@ -109,7 +109,7 @@
 
         /* Fixed Bottom Space */
         main {
-            padding-bottom: calc(140px + env(safe-area-inset-bottom)) !important;
+            padding-bottom: calc(100px + env(safe-area-inset-bottom)) !important;
         }
 
         /* Smooth Header Transition */
@@ -146,26 +146,6 @@
       :class="darkMode ? 'dark bg-black text-slate-100' : 'bg-[#F2F5F9] text-slate-900'"
       class="min-h-screen flex flex-col transition-all duration-500 overflow-x-hidden">
 
-    <!-- Loading Splash Screen -->
-    <div x-show="showSplash"
-         x-transition:leave="transition ease-in duration-500"
-         x-transition:leave-start="opacity-100 scale-100"
-         x-transition:leave-end="opacity-0 scale-110"
-         class="fixed inset-0 z-[300] flex flex-col items-center justify-center bg-black"
-         x-cloak>
-        <div class="text-center space-y-4">
-            <h2 class="text-white text-3xl font-black uppercase tracking-[0.25em] leading-none">Omega Zone</h2>
-            <div class="bg-blue-600/20 px-6 py-2 rounded-full border border-blue-500/30">
-                <p class="text-blue-400 text-[10px] font-black uppercase tracking-[0.4em] animate-pulse">initiated by Saurashtra 1 & 4</p>
-            </div>
-        </div>
-        <!-- Modern Loader -->
-        <div class="absolute bottom-16 flex items-center space-x-3">
-            <div class="w-1.5 h-1.5 bg-blue-500 rounded-full animate-bounce [animation-delay:-0.3s]"></div>
-            <div class="w-1.5 h-1.5 bg-blue-400 rounded-full animate-bounce [animation-delay:-0.15s]"></div>
-            <div class="w-1.5 h-1.5 bg-blue-300 rounded-full animate-bounce"></div>
-        </div>
-    </div>
 
     <!-- Login Screen removed -->
 
@@ -189,46 +169,30 @@
             lastScroll = currentScroll <= 0 ? 0 : currentScroll;
          ">
     <header x-show="currentTab === 'Affordability'"
-            class="glass-header shadow-md pt-[calc(10px+env(safe-area-inset-top))]"
-            :class="darkMode ? 'text-white border-white/10' : 'text-slate-900 border-slate-200'">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-row justify-between items-center">
+            class="glass-header shadow-md pt-[calc(10px+env(safe-area-inset-top))]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex flex-row justify-between items-center">
             <!-- Left: Logo -->
             <div class="flex items-center">
                 <div @click="toggleDarkMode()" class="cursor-pointer active:scale-95 transition-transform text-left">
-                    <h1 class="text-xl sm:text-2xl font-black uppercase tracking-tighter leading-none" :class="darkMode ? 'text-white' : 'text-slate-900'" x-text="'Omega Zone'"></h1>
-                    <div class="flex items-center space-x-2 mt-1">
-                        <p class="text-xl sm:text-2xl font-black uppercase tracking-tighter leading-none" :class="darkMode ? 'text-blue-400' : 'text-blue-600'" x-text="'Retail Engine'"></p>
-                        <template x-if="isSyncing">
-                            <span class="animate-spin h-3 w-3 border-2 border-blue-500 border-t-transparent rounded-full"></span>
-                        </template>
-                    </div>
+                    <h1 class="text-xl font-black uppercase tracking-tighter leading-none" :class="darkMode ? 'text-white' : 'text-slate-900'" x-text="'Omega Zone'"></h1>
+                    <p class="text-xl font-black uppercase tracking-tighter leading-none" :class="darkMode ? 'text-blue-400' : 'text-blue-600'" x-text="'Retail Engine'"></p>
                 </div>
             </div>
 
-            <!-- Right: Action Buttons (Stacked vertically) -->
-            <div class="flex flex-col items-end space-y-1.5">
+            <!-- Right: Action Buttons -->
+            <div class="flex items-center space-x-2">
                 <button @click="showPartnerModal = true"
                         :class="darkMode ? 'bg-white/10 text-white border-white/10' : 'bg-blue-50 text-blue-700 border-blue-100'"
-                        class="hover:opacity-80 text-[9px] px-3 py-1.5 rounded-xl font-bold transition-all flex items-center space-x-1.5 border shadow-sm">
-                    <svg class="w-3 h-3" :class="darkMode ? 'text-blue-300' : 'text-blue-600'" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        class="hover:opacity-80 text-[10px] px-3 py-1.5 rounded-xl font-black uppercase tracking-widest transition-all flex items-center space-x-1 border shadow-sm">
+                    <svg class="w-3.5 h-3.5" :class="darkMode ? 'text-blue-300' : 'text-blue-600'" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                     <span>Guide</span>
-                </button>
-
-                <button x-show="compareList.length >= 2 && currentTab === 'Affordability'"
-                        @click="showCompareModal = true"
-                        x-transition
-                        class="bg-blue-600 hover:bg-blue-500 text-white text-[9px] px-3 py-1.5 rounded-xl font-black uppercase tracking-widest transition-all flex items-center space-x-1.5 shadow-lg animate-pulse"
-                        x-cloak>
-                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
-                    <span>Compare</span>
-                    <span class="bg-white text-blue-600 px-1 rounded min-w-[12px] text-center" x-text="compareList.length"></span>
                 </button>
             </div>
         </div>
     </header>
 
     <!-- Affordability Filter Section -->
-    <section x-show="currentTab === 'Affordability'" class="bg-white border-b border-slate-200 shadow-sm pt-3 pb-2 transition-all duration-300 dark:bg-black dark:border-slate-800 relative z-10">
+    <section x-show="currentTab === 'Affordability'" class="bg-white border-b border-slate-200 shadow-sm pt-2 pb-2 transition-all duration-300 dark:bg-black dark:border-slate-800 relative z-10">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-2">
             <!-- Top Row: Search and Reset -->
             <div class="flex items-center gap-2">
@@ -236,16 +200,16 @@
                     <span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-slate-400">
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
                     </span>
-                    <input type="text" x-model="searchQuery" placeholder="Search models, banks..."
-                           class="w-full pl-8 pr-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-[10px] focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all dark:bg-white/5 dark:border-white/10 dark:text-white shadow-sm">
+                    <input type="text" x-model="searchQuery" placeholder="Search models..."
+                           class="w-full pl-8 pr-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-[11px] font-bold focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all dark:bg-white/5 dark:border-white/10 dark:text-white shadow-sm">
                 </div>
-                <button @click="resetFilters()" class="p-2 bg-blue-600/10 text-blue-600 rounded-xl hover:bg-blue-600 hover:text-white transition-all active:scale-90 border border-blue-600/20">
+                <button @click="resetFilters()" class="p-2 bg-blue-600/10 text-blue-600 rounded-xl border border-blue-600/20 active:scale-90">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
                 </button>
             </div>
 
-            <!-- Middle Row: Series Pills (Horizontal Scroll) -->
-            <div class="flex overflow-x-auto pb-1 no-scrollbar -mx-4 px-4 space-x-2">
+            <!-- Middle Row: Series Pills -->
+            <div class="flex overflow-x-auto pb-0.5 no-scrollbar -mx-4 px-4 space-x-2">
                 <template x-for="series in ['All', 'Foldable', 'X Series', 'V Series', 'S Series', 'Y Series', 'T Series', 'iQOO', 'Extender Kit']" :key="series">
                     <button @click="selectedSeries = series"
                             :class="selectedSeries === series ? 'filter-chip-active' : 'bg-slate-100 text-slate-500 dark:bg-white/5 dark:text-slate-400 border-slate-200 dark:border-white/10'"
@@ -257,171 +221,77 @@
 
             <!-- Bottom Row: Multi-dropdowns -->
             <div class="grid grid-cols-3 gap-2">
-                <select x-model="selectedRam" class="w-full py-1.5 px-2 bg-slate-50 border border-slate-200 rounded-lg text-[9px] font-bold focus:outline-none focus:ring-1 focus:ring-blue-500 cursor-pointer dark:bg-white/5 dark:border-white/10 dark:text-white transition-all appearance-none">
+                <select x-model="selectedRam" class="w-full py-1.5 px-2 bg-slate-50 border border-slate-200 rounded-lg text-[10px] font-black focus:outline-none focus:ring-1 focus:ring-blue-500 cursor-pointer dark:bg-white/5 dark:border-white/10 dark:text-white appearance-none text-center">
                     <option value="All">All RAM</option>
                     <option value="4GB">4GB</option><option value="6GB">6GB</option><option value="8GB">8GB</option><option value="12GB">12GB</option><option value="16GB">16GB</option>
                 </select>
-                <select x-model="selectedRom" class="w-full py-1.5 px-2 bg-slate-50 border border-slate-200 rounded-lg text-[9px] font-bold focus:outline-none focus:ring-1 focus:ring-blue-500 cursor-pointer dark:bg-white/5 dark:border-white/10 dark:text-white transition-all appearance-none">
+                <select x-model="selectedRom" class="w-full py-1.5 px-2 bg-slate-50 border border-slate-200 rounded-lg text-[10px] font-black focus:outline-none focus:ring-1 focus:ring-blue-500 cursor-pointer dark:bg-white/5 dark:border-white/10 dark:text-white appearance-none text-center">
                     <option value="All">All ROM</option>
                     <option value="64GB">64GB</option><option value="128GB">128GB</option><option value="256GB">256GB</option><option value="512GB">512GB</option><option value="1TB">1TB</option>
                 </select>
-                <select x-model="sortBy" class="w-full py-1.5 px-2 bg-slate-50 border border-slate-200 rounded-lg text-[9px] font-bold focus:outline-none focus:ring-1 focus:ring-blue-500 cursor-pointer dark:bg-white/5 dark:border-white/10 dark:text-white transition-all appearance-none">
+                <select x-model="sortBy" class="w-full py-1.5 px-2 bg-slate-50 border border-slate-200 rounded-lg text-[10px] font-black focus:outline-none focus:ring-1 focus:ring-blue-500 cursor-pointer dark:bg-white/5 dark:border-white/10 dark:text-white appearance-none text-center">
                     <option value="default">Sort By</option>
                     <option value="name">Name</option><option value="price-low">Price: Low</option><option value="price-high">Price: High</option>
                 </select>
             </div>
         </div>
     </section>
-
-    <!-- Product Header Section -->
-    <header x-show="currentTab === 'Product'"
-            class="glass-header shadow-md pt-[calc(10px+env(safe-area-inset-top))]"
-            :class="darkMode ? 'text-white border-white/10' : 'text-slate-900 border-slate-200'">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-row justify-between items-center">
-            <div class="flex items-center">
-                <div @click="toggleDarkMode()" class="cursor-pointer active:scale-95 transition-transform text-left">
-                    <h1 class="text-xl sm:text-2xl font-black uppercase tracking-tighter leading-none" :class="darkMode ? 'text-white' : 'text-slate-900'" x-text="'Omega Zone'"></h1>
-                    <div class="flex items-center space-x-2 mt-1">
-                        <p class="text-xl sm:text-2xl font-black uppercase tracking-tighter leading-none" :class="darkMode ? 'text-blue-400' : 'text-blue-600'" x-text="'Products'"></p>
-                    </div>
-                </div>
-            </div>
-            <div class="flex flex-col items-end space-y-1.5">
-                <button @click="showPartnerModal = true"
-                        :class="darkMode ? 'bg-white/10 text-white border-white/10' : 'bg-blue-50 text-blue-700 border-blue-100'"
-                        class="hover:opacity-80 text-[9px] px-3 py-1.5 rounded-xl font-bold transition-all flex items-center space-x-1.5 border shadow-sm">
-                    <svg class="w-3 h-3" :class="darkMode ? 'text-blue-300' : 'text-blue-600'" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                    <span>Guide</span>
-                </button>
-            </div>
-        </div>
-    </header>
-
-    <!-- Product Filter Section -->
-    <section x-show="currentTab === 'Product'" class="bg-white border-b border-slate-200 shadow-sm pt-3 pb-2 transition-all duration-300 dark:bg-black dark:border-slate-800 relative z-10">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-2">
-            <!-- Top Row: Search and Reset -->
-            <div class="flex items-center gap-2">
-                <div class="relative flex-1">
-                    <span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-slate-400">
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-                    </span>
-                    <input type="text" x-model="productSearchQuery" placeholder="Search product names, specs..."
-                           class="w-full pl-8 pr-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-[10px] focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all dark:bg-white/5 dark:border-white/10 dark:text-white shadow-sm">
-                </div>
-                <button @click="resetProductFilters()" class="p-2 bg-blue-600/10 text-blue-600 rounded-xl hover:bg-blue-600 hover:text-white transition-all active:scale-90 border border-blue-600/20">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
-                </button>
-            </div>
-
-            <!-- Middle Row: Series Pills -->
-            <div class="flex overflow-x-auto pb-1 no-scrollbar -mx-4 px-4 space-x-2">
-                <template x-for="series in ['All', 'Foldable', 'X Series', 'V Series', 'S Series', 'Y Series', 'T Series', 'iQOO', 'Extender Kit']" :key="series">
-                    <button @click="productSeriesFilter = series"
-                            :class="productSeriesFilter === series ? 'filter-chip-active' : 'bg-slate-100 text-slate-500 dark:bg-white/5 dark:text-slate-400 border-slate-200 dark:border-white/10'"
-                            class="filter-chip whitespace-nowrap px-4 py-2 rounded-xl text-[9px] font-black uppercase tracking-wider border transition-all"
-                            x-text="series === 'All' ? 'All Series' : series">
-                    </button>
-                </template>
-            </div>
-        </div>
-    </section>
-    </div>
-
     </div>
 
     <!-- Top Spacer to prevent content overlap with fixed header -->
     <div x-show="currentTab === 'Affordability'"
          class="w-full"
-         :style="'height: calc(150px + env(safe-area-inset-top))'"></div>
+         :style="'height: calc(180px + env(safe-area-inset-top))'"></div>
 
-    <div x-show="currentTab === 'Product'"
-         class="w-full"
-         :style="'height: calc(110px + env(safe-area-inset-top))'"></div>
+    <main x-show="currentTab === 'Affordability'" class="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 py-4 pb-24 relative">
 
-    <main x-show="currentTab === 'Affordability'" class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 pb-24 relative">
-
-        <div class="flex justify-between items-center mb-6">
-            <div class="space-y-1">
-                <p class="text-xs text-slate-500 font-bold uppercase tracking-[0.2em]">Retail Engine Live</p>
-                <p class="text-[10px] text-slate-400">Total Groups: <span class="text-blue-500 font-bold" x-text="groupedModels.length"></span></p>
-            </div>
-            <div class="hidden sm:flex items-center space-x-2 bg-white/40 dark:bg-white/5  px-4 py-2 rounded-2xl border border-white/20">
-                <span class="relative flex h-2 w-2">
-                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                    <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-                </span>
-                <span class="text-[10px] text-slate-500 font-black uppercase">Sync Complete</span>
+        <div class="flex justify-between items-center mb-4">
+            <div class="space-y-0.5">
+                <p class="text-[10px] text-slate-500 font-bold uppercase tracking-[0.2em]">Live Engine</p>
+                <p class="text-[9px] text-slate-400 font-bold uppercase">Groups: <span class="text-blue-500" x-text="groupedModels.length"></span></p>
             </div>
         </div>
 
-        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3" x-show="groupedModels.length > 0">
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2.5" x-show="groupedModels.length > 0">
             <template x-for="group in groupedModels" :key="group.name">
-                <div class="glass-card rounded-[24px] p-4 flex flex-col justify-between relative overflow-hidden"
+                <div class="glass-card rounded-xl p-2 flex flex-col justify-between relative overflow-hidden"
                      x-transition:enter="transition ease-out duration-500"
-                     x-transition:enter-start="opacity-0 translate-y-12 scale-95"
+                     x-transition:enter-start="opacity-0 translate-y-4 scale-95"
                      x-transition:enter-end="opacity-100 translate-y-0 scale-100">
 
-                    <!-- Decorative Glass Glow -->
-                    <div class="absolute -top-10 -right-10 w-24 h-24 bg-blue-500/10 rounded-full blur-2xl"></div>
-
                     <div class="relative z-10">
-                        <div class="flex justify-between items-center mb-3">
-                            <span class="text-[7px] font-black px-2 py-1 rounded-full bg-slate-900 text-white dark:bg-white dark:text-black uppercase tracking-[0.2em]" x-text="group.series"></span>
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="text-[6px] font-black px-1.5 py-0.5 rounded-full bg-slate-900 text-white dark:bg-white dark:text-black uppercase tracking-widest" x-text="group.series"></span>
                             <button @click.stop="toggleCompare(getSelectedVariant(group))"
-                                    :class="isInCompare(getSelectedVariant(group).id) ? 'bg-blue-600 text-white' : 'bg-slate-200 text-slate-600 dark:bg-white/10 dark:text-slate-400'"
-                                    class="p-1.5 rounded-lg transition-all active:scale-90">
-                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+                                    :class="isInCompare(getSelectedVariant(group).id) ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-400 dark:bg-white/5 dark:text-slate-500'"
+                                    class="p-1 rounded-lg transition-all active:scale-90">
+                                <svg class="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
                             </button>
                         </div>
 
-                        <h3 class="text-xs font-black text-slate-900 mb-2 dark:text-white leading-tight tracking-tight h-8 overflow-hidden line-clamp-2" x-text="group.name"></h3>
+                        <h3 class="text-[10px] font-black text-slate-900 mb-1 dark:text-white leading-tight tracking-tight h-7 overflow-hidden line-clamp-2 uppercase" x-text="group.name"></h3>
 
-                        <!-- Variant Selector -->
-                        <div class="mb-3 bg-black/5 dark:bg-white/5 p-1 rounded-[16px] border border-black/5 dark:border-white/5" x-show="group.variants.length > 1">
-                            <div class="flex flex-wrap gap-1">
-                                <template x-for="(v, vIdx) in group.variants" :key="v.id">
-                                    <button @click="setVariant(group.name, vIdx)"
-                                            :class="getVariantIndex(group.name) === vIdx ? 'bg-white dark:bg-blue-600 text-black dark:text-white shadow-md scale-105' : 'text-slate-500 dark:text-slate-400 hover:bg-white/50'"
-                                            class="px-2 py-1 rounded-[12px] text-[7px] font-black uppercase tracking-wider transition-all duration-300"
-                                            x-text="v.specs">
-                                    </button>
-                                </template>
+                        <div class="grid grid-cols-1 gap-1 mb-2">
+                            <div class="bg-black/5 dark:bg-white/5 px-2 py-1.5 rounded-lg flex justify-between items-center border border-black/5 dark:border-white/5">
+                                <span class="text-slate-400 text-[6px] uppercase font-black tracking-widest">MOP</span>
+                                <span class="font-black text-slate-900 text-[10px] dark:text-white" x-text="'₹' + getSelectedVariant(group).mop.toLocaleString('en-IN')"></span>
                             </div>
                         </div>
 
-                        <div class="grid grid-cols-1 gap-2 mb-3">
-                            <div class="price-chip p-2 rounded-[16px] shadow-sm flex justify-between items-center">
-                                <span class="text-slate-400 text-[7px] uppercase font-black tracking-widest">MOP</span>
-                                <span class="font-black text-slate-900 text-[11px] dark:text-white" x-text="'₹' + getSelectedVariant(group).mop.toLocaleString('en-IN')"></span>
-                            </div>
-                            <div class="min-chip p-2 rounded-[16px] shadow-sm flex justify-between items-center border border-emerald-500/10">
-                                <span class="text-emerald-600 dark:text-emerald-400 text-[7px] uppercase font-black tracking-widest">Min Swipe</span>
-                                <span class="font-black text-emerald-600 dark:text-emerald-400 text-[11px]" x-text="typeof getSelectedVariant(group).minSwipe === 'number' ? '₹' + getSelectedVariant(group).minSwipe.toLocaleString('en-IN') : getSelectedVariant(group).minSwipe"></span>
-                            </div>
-                        </div>
-
-                        <div class="space-y-1 mb-4 text-[9px]">
-                            <div class="flex justify-between items-center px-1">
+                        <div class="flex flex-col gap-0.5 mb-2 px-0.5 border-t border-black/5 dark:border-white/5 pt-1">
+                            <div class="flex justify-between items-center">
                                 <span class="text-slate-400 font-bold uppercase text-[6px] tracking-widest">EMI</span>
-                                <span class="font-black text-blue-600 dark:text-blue-400" x-text="getSelectedVariant(group).ccEmiCashback"></span>
+                                <span class="font-black text-[9px] text-blue-600 dark:text-blue-400" x-text="getSelectedVariant(group).ccEmiCashback"></span>
                             </div>
-                            <div class="flex justify-between items-center px-1">
-                                <span class="text-slate-400 font-bold uppercase text-[6px] tracking-widest">FS</span>
-                                <span class="font-black text-purple-600 dark:text-purple-400" x-text="getSelectedVariant(group).ccFullswipeCashback"></span>
-                            </div>
-                            <div class="flex justify-between items-center px-1">
-                                <span class="text-slate-400 font-bold uppercase text-[6px] tracking-widest">UPI</span>
-                                <span class="font-black text-emerald-600 dark:text-emerald-400" x-text="getSelectedVariant(group).upiCashback || 'NA'"></span>
+                            <div class="flex justify-between items-center">
+                                <span class="text-slate-400 font-bold uppercase text-[6px] tracking-widest">Full</span>
+                                <span class="font-black text-[9px] text-purple-600 dark:text-purple-400" x-text="getSelectedVariant(group).ccFullswipeCashback"></span>
                             </div>
                         </div>
                     </div>
 
-                    <button @click="openModal(group)" class="w-full relative offer-btn text-white py-2.5 rounded-[16px] text-[9px] font-black uppercase tracking-[0.2em] transition-all hover:scale-[1.02] active:scale-95 group">
-                        <span class="relative z-10 flex items-center justify-center space-x-2">
-                            <span>Offer Details</span>
-                            <svg class="w-3 h-3 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
-                        </span>
+                    <button @click="openModal(group)" class="w-full relative offer-btn text-white py-2 rounded-lg text-[8px] font-black uppercase tracking-widest transition-all hover:scale-[1.02] active:scale-95 group">
+                        Offers
                     </button>
                 </div>
             </template>
@@ -450,146 +320,7 @@
     </main>
 
     <!-- Product Tab Content -->
-    <main x-show="currentTab === 'Product'" class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 pb-24 relative" x-cloak>
-
-        <div class="flex justify-between items-center mb-8">
-            <div class="space-y-1">
-                <p class="text-xs text-slate-500 font-bold uppercase tracking-[0.2em]">Product Intelligence</p>
-                <p class="text-[10px] text-slate-400">Total Models: <span class="text-blue-500 font-bold" x-text="filteredProductList.length"></span></p>
-            </div>
-        </div>
-
-        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3" x-show="filteredProductList.length > 0">
-            <template x-for="name in filteredProductList" :key="name">
-                <div @click="setProductModel(name)"
-                     class="glass-card rounded-[24px] p-2.5 flex flex-col justify-between relative overflow-hidden cursor-pointer group"
-                     :class="selectedProductModel === name ? 'ring-2 ring-blue-500 bg-blue-500/5 shadow-blue-500/20' : ''"
-                     x-transition:enter="transition ease-out duration-500"
-                     x-transition:enter-start="opacity-0 translate-y-12 scale-95"
-                     x-transition:enter-end="opacity-100 translate-y-0 scale-100">
-
-                    <div class="absolute -top-10 -right-10 w-24 h-24 bg-blue-500/10 rounded-full blur-2xl group-hover:bg-blue-500/20 transition-all"></div>
-
-                    <div class="relative z-10 text-center space-y-2">
-                        <div class="flex justify-between items-center px-1">
-                            <span class="inline-block text-[7px] font-black px-2 py-1 rounded-full bg-slate-900 text-white dark:bg-white dark:text-black uppercase tracking-[0.2em]" x-text="catalog[name].series"></span>
-                        </div>
-
-                        <div class="w-full aspect-[3/4] flex items-center justify-center overflow-hidden rounded-2xl bg-slate-50/50 dark:bg-white/5">
-                            <img :src="getProductImage(name)" @error="cycleProductImage($event, name)"
-                                 class="w-full h-full object-contain group-hover:scale-110 transition-transform duration-700"
-                                 :alt="name">
-                        </div>
-
-                        <div class="pt-1">
-                            <h3 class="text-xs font-black text-slate-900 dark:text-white leading-tight tracking-tight uppercase" x-text="name"></h3>
-                            <p class="text-[8px] text-slate-400 font-bold italic truncate" x-text="catalog[name].tagline"></p>
-                        </div>
-                    </div>
-                </div>
-            </template>
-        </div>
-
-        <!-- Spec Modal for Product -->
-        <div x-show="showProductModal" class="fixed inset-0 z-[100] overflow-y-auto bg-slate-900/60  flex items-center justify-center p-4" x-cloak
-             x-transition:enter="transition ease-out duration-300"
-             x-transition:enter-start="opacity-0 scale-95"
-             x-transition:enter-end="opacity-100 scale-100">
-            <div class="bg-white rounded-[40px] shadow-2xl max-w-5xl w-full max-h-[90vh] overflow-y-auto border border-slate-200 dark:bg-slate-950 dark:border-slate-700" @click.away="showProductModal = false">
-
-                <div class="vivo-blue text-white p-6 sticky top-0 z-30 flex justify-between items-center shadow-md dark:bg-black">
-                    <div>
-                        <div class="flex items-center space-x-2">
-                            <span class="bg-white/20 text-white text-[10px] font-bold px-2 py-0.5 rounded uppercase" x-text="catalog[selectedProductModel]?.series"></span>
-                            <h2 class="text-2xl font-black uppercase tracking-tighter" x-text="selectedProductModel"></h2>
-                        </div>
-                        <p class="text-xs text-blue-100 mt-1 italic" x-text="catalog[selectedProductModel]?.tagline"></p>
-                    </div>
-                    <button @click="showProductModal = false" class="text-white hover:bg-white/20 p-2 rounded-xl transition">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-                    </button>
-                </div>
-
-                <div class="flex flex-col md:flex-row pt-4">
-                    <!-- Left: Image & Colors -->
-                    <div class="p-4 md:w-[60%] space-y-6">
-                        <div class="relative w-full aspect-[4/5] bg-blue-50/30 dark:bg-slate-800/30 rounded-[32px] border border-blue-100 dark:border-white/5 flex items-center justify-center overflow-hidden shadow-2xl">
-                            <img :src="getProductImage(selectedProductModel, selectedColor)" @error="cycleProductImage($event, selectedProductModel, selectedColor)"
-                                 class="relative z-10 w-full h-full object-contain transition-all duration-700 hover:scale-105">
-                        </div>
-
-                        <div class="flex justify-center flex-wrap gap-2">
-                            <template x-for="color in catalog[selectedProductModel]?.colors" :key="color">
-                                <button @click="selectedColor = color"
-                                        :class="selectedColor === color ? 'ring-2 ring-blue-500 scale-105 bg-blue-500/10' : 'opacity-70 bg-black/5 dark:bg-white/5'"
-                                        class="px-4 py-2 rounded-xl text-[9px] font-black uppercase tracking-widest transition-all shadow-sm"
-                                        x-text="color">
-                                </button>
-                            </template>
-                        </div>
-                    </div>
-
-                    <!-- Right: Full Specs -->
-                    <div class="p-8 md:w-[40%] space-y-8 bg-slate-50/50 dark:bg-black/10 ">
-                        <!-- Design -->
-                        <div class="space-y-4">
-                            <h3 class="text-blue-600 font-black uppercase tracking-widest text-sm flex items-center">
-                                <span class="w-8 h-px bg-blue-600 mr-3"></span> Design
-                            </h3>
-                            <ul class="space-y-2 text-xs font-bold text-slate-600 dark:text-slate-300">
-                                <template x-for="item in catalog[selectedProductModel]?.design" :key="item">
-                                    <li class="flex items-start"><span class="w-1.5 h-1.5 bg-blue-500 rounded-full mt-1.5 mr-3 shrink-0"></span> <span x-text="item"></span></li>
-                                </template>
-                            </ul>
-                        </div>
-
-                        <!-- Imaging -->
-                        <div class="space-y-4">
-                            <h3 class="text-blue-600 font-black uppercase tracking-widest text-sm flex items-center">
-                                <span class="w-8 h-px bg-blue-600 mr-3"></span> <span x-text="catalog[selectedProductModel]?.cameraTitle || 'Photography'"></span>
-                            </h3>
-                            <ul class="space-y-2 text-xs font-bold text-slate-600 dark:text-slate-300">
-                                <template x-for="item in catalog[selectedProductModel]?.camera" :key="item">
-                                    <li class="flex items-start"><span class="w-1.5 h-1.5 bg-blue-500 rounded-full mt-1.5 mr-3 shrink-0"></span> <span x-text="item"></span></li>
-                                </template>
-                            </ul>
-                        </div>
-
-                        <!-- Performance -->
-                        <div class="space-y-4">
-                            <h3 class="text-blue-600 font-black uppercase tracking-widest text-sm flex items-center">
-                                <span class="w-8 h-px bg-blue-600 mr-3"></span> Performance
-                            </h3>
-                            <ul class="space-y-2 text-xs font-bold text-slate-600 dark:text-slate-300">
-                                <template x-for="item in catalog[selectedProductModel]?.performance" :key="item">
-                                    <li class="flex items-start"><span class="w-1.5 h-1.5 bg-blue-500 rounded-full mt-1.5 mr-3 shrink-0"></span> <span x-text="item"></span></li>
-                                </template>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="bg-slate-50 px-6 py-4 border-t border-slate-200 flex justify-end dark:bg-black">
-                    <button @click="showProductModal = false" class="bg-slate-900 text-white dark:bg-blue-600 px-6 py-2.5 rounded-2xl text-[10px] font-black uppercase tracking-widest active:scale-95 transition-transform">
-                        Done
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <div class="flex flex-col items-center justify-center py-32 space-y-8" x-show="filteredProductList.length === 0" x-cloak>
-            <div class="relative">
-                <div class="absolute inset-0 bg-blue-500/20 rounded-full blur-3xl animate-pulse"></div>
-                <div class="bg-white dark:bg-slate-950 p-10 rounded-full shadow-2xl relative">
-                    <svg class="w-24 h-24 text-slate-300 dark:text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-                </div>
-            </div>
-            <h2 class="text-2xl font-black text-slate-400 uppercase tracking-tighter">No Catalog Result</h2>
-            <button @click="resetProductFilters()" class="bg-blue-600 text-white px-8 py-3 rounded-full font-black uppercase tracking-widest active:scale-95 transition-transform">
-                Clear Filters
-            </button>
-        </div>
-    </main>
+    <!-- Profile Tab Content -->
 
     <!-- Profile Tab Content -->
     <main x-show="currentTab === 'Profile'" class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 pb-24 relative" x-cloak>
@@ -635,7 +366,7 @@
 
     <!-- Bottom Navigation Bar -->
     <nav class="fixed bottom-[calc(16px+env(safe-area-inset-bottom))] inset-x-4 z-50 bg-white/95 dark:bg-black/90 backdrop-blur-md border border-slate-200 dark:border-white/10 rounded-[28px] shadow-2xl">
-        <div class="max-w-md mx-auto h-16 grid grid-cols-3">
+        <div class="max-w-md mx-auto h-16 grid grid-cols-2">
             <!-- Affordability Tab -->
             <button @click="setTab('Affordability')"
                     class="flex flex-col items-center justify-center space-y-1 transition-all relative"
@@ -643,17 +374,6 @@
                 <div class="w-6 h-6 flex items-center justify-center text-xl font-black transition-transform" :class="currentTab === 'Affordability' ? 'scale-110' : ''">₹</div>
                 <span class="text-[8px] font-black uppercase tracking-tighter">Affordability</span>
                 <div x-show="currentTab === 'Affordability'" class="nav-indicator"></div>
-            </button>
-
-            <!-- Product Tab -->
-            <button @click="setTab('Product')"
-                    class="flex flex-col items-center justify-center space-y-1 transition-all relative"
-                    :class="currentTab === 'Product' ? 'bottom-nav-active' : 'text-slate-400'">
-                <svg class="w-5 h-5 transition-transform" :class="currentTab === 'Product' ? 'scale-110' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/>
-                </svg>
-                <span class="text-[8px] font-black uppercase tracking-tighter">Product</span>
-                <div x-show="currentTab === 'Product'" class="nav-indicator"></div>
             </button>
 
             <!-- Profile Tab -->
@@ -669,414 +389,365 @@
         </div>
     </nav>
 
-    <div x-show="selectedModel" class="fixed inset-0 z-50 overflow-y-auto bg-slate-900/60  flex items-center justify-center p-4" x-cloak
+    <!-- Full Screen Offer Modal for Portrait Optimization -->
+    <div x-show="selectedModel" class="fixed inset-0 z-[100] flex flex-col bg-slate-50 dark:bg-[#050505] overflow-hidden" x-cloak
          x-transition:enter="transition ease-out duration-300"
-         x-transition:enter-start="opacity-0 scale-95"
-         x-transition:enter-end="opacity-100 scale-100">
-        <div class="bg-white rounded-[32px] shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto border border-slate-200 dark:bg-slate-950 dark:border-slate-700" @click.away="selectedModel = null; selectedGroupForModal = null;">
-            
-            <div class="vivo-blue text-white p-6 sticky top-0 z-30 flex justify-between items-center shadow-md dark:bg-black dark:shadow-none">
-                <div>
-                    <div class="flex items-center space-x-2">
-                        <span class="bg-white/20 text-white text-[10px] font-bold px-2 py-0.5 rounded uppercase" x-text="selectedModel?.series"></span>
-                        <h2 class="text-xl font-black uppercase tracking-tighter" x-text="selectedModel?.name"></h2>
+         x-transition:enter-start="opacity-0 translate-y-full"
+         x-transition:enter-end="opacity-100 translate-y-0">
+
+        <!-- Header: Sticky at top -->
+        <div class="vivo-blue text-white p-5 shrink-0 flex justify-between items-center shadow-lg dark:bg-black pt-[calc(1.25rem+env(safe-area-inset-top))]">
+            <div class="space-y-1">
+                <div class="flex items-center space-x-2">
+                    <span class="bg-white/20 text-white text-[9px] font-black px-2 py-0.5 rounded-full uppercase tracking-widest" x-text="selectedModel?.series"></span>
+                    <h2 class="text-xl font-black uppercase tracking-tighter" x-text="selectedModel?.name"></h2>
+                </div>
+
+                <div class="flex items-center gap-2">
+                    <template x-if="selectedGroupForModal && selectedGroupForModal.variants.length > 1">
+                        <div class="flex items-center space-x-2 bg-white/10 px-2 py-1 rounded-xl border border-white/10">
+                            <span class="text-[8px] text-blue-100 font-black uppercase">Variant:</span>
+                            <select @change="changeModalVariant($event.target.value)" class="bg-transparent text-white text-[10px] font-bold focus:outline-none cursor-pointer">
+                                <template x-for="(v, vIdx) in (selectedGroupForModal?.variants || [])" :key="v.id">
+                                    <option :value="vIdx" :selected="selectedModel?.id === v.id" x-text="v.specs" class="text-slate-900"></option>
+                                </template>
+                            </select>
+                        </div>
+                    </template>
+                    <p class="text-[10px] text-blue-200 font-black italic tracking-wide" x-show="!selectedGroupForModal || selectedGroupForModal.variants.length <= 1" x-text="selectedModel?.specs"></p>
+                </div>
+            </div>
+            <button @click="selectedModel = null; selectedGroupForModal = null;" class="bg-white/10 hover:bg-white/20 p-2.5 rounded-2xl transition-all active:scale-90">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+        </div>
+
+        <!-- Tab Navigation: Sticky below Header -->
+        <div class="flex border-b border-slate-200 dark:border-slate-800 overflow-x-auto no-scrollbar bg-white dark:bg-slate-950 shrink-0">
+            <template x-for="tab in [{id:'paper-finance', label:'📄 Finance'}, {id:'cc-emi', label:'💳 CC EMI'}, {id:'fs-upi', label:'⚡ Full Swipe'}, {id:'vshield', label:'🛡️ V-Shield'}, {id:'terms', label:'📋 Terms'}]" :key="tab.id">
+                <button @click="activeTab = tab.id"
+                        :class="activeTab === tab.id ? 'border-b-2 border-blue-600 text-blue-600 dark:text-blue-400 font-black bg-blue-50/50 dark:bg-blue-500/10' : 'text-slate-500 font-bold'"
+                        class="flex-1 py-4 text-[10px] whitespace-nowrap transition-all uppercase tracking-wider"
+                        x-text="tab.label">
+                </button>
+            </template>
+        </div>
+
+        <!-- Scrollable Content Body -->
+        <div class="flex-1 overflow-y-auto p-4 space-y-4 no-scrollbar pb-[calc(100px+env(safe-area-inset-bottom))]">
+
+            <!-- Compact Pricing & Schemes Grid -->
+            <div class="grid grid-cols-2 gap-2" x-show="activeTab === 'paper-finance'">
+                <div class="bg-white dark:bg-white/5 p-3 rounded-xl border border-slate-200 dark:border-white/10 shadow-sm">
+                    <span class="text-slate-400 block text-[7px] uppercase font-black tracking-widest mb-1">MOP</span>
+                    <span class="text-lg font-black text-slate-900 dark:text-white" x-text="'₹' + selectedModel?.mop.toLocaleString('en-IN')"></span>
+                </div>
+                <div class="bg-white dark:bg-white/5 p-3 rounded-xl border border-slate-200 dark:border-white/10 shadow-sm flex flex-col justify-center">
+                    <div class="flex flex-wrap gap-1">
+                        <template x-for="sch in (selectedModel?.bajajSchemes || [])" :key="sch">
+                            <span class="text-[8px] font-black px-1.5 py-0.5 rounded bg-blue-600 text-white" x-text="sch"></span>
+                        </template>
                     </div>
-                    <div class="flex items-center space-x-2 mt-2" x-show="selectedGroupForModal && selectedGroupForModal.variants.length > 1">
-                        <span class="text-xs text-blue-100 font-medium">Variant:</span>
-                        <select @change="changeModalVariant($event.target.value)" class="bg-white/20 text-white border border-white/30 rounded-lg px-2 py-1 text-xs focus:outline-none cursor-pointer">
-                            <template x-for="(v, vIdx) in (selectedGroupForModal?.variants || [])" :key="v.id">
-                                <option :value="vIdx" :selected="selectedModel?.id === v.id" x-text="v.specs + ' (₹' + v.mop.toLocaleString('en-IN') + ')'" class="text-slate-900"></option>
+                </div>
+            </div>
+
+            <!-- Paper Finance Content -->
+            <div x-show="activeTab === 'paper-finance'" class="space-y-3" x-transition>
+                <div class="grid grid-cols-2 gap-2">
+                    <div class="space-y-1">
+                        <label class="block font-black text-slate-400 text-[7px] uppercase tracking-widest ml-1">NBFC</label>
+                        <select x-model="calcPartner" @change="onPartnerChange()" class="w-full p-2.5 bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-lg text-[10px] font-black outline-none shadow-sm appearance-none">
+                            <option value="Bajaj Finance">Bajaj</option>
+                            <option value="IDFC First Bank">IDFC</option>
+                            <option value="DMI Finance">DMI</option>
+                            <option value="HDB Financial Services">HDB</option>
+                            <option value="TVS Credit">TVS</option>
+                            <option value="ICICI Bank">ICICI</option>
+                        </select>
+                    </div>
+                    <div class="space-y-1">
+                        <label class="block font-black text-slate-400 text-[7px] uppercase tracking-widest ml-1">Scheme</label>
+                        <select x-model="calcScheme" class="w-full p-2.5 bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-lg text-[10px] font-black outline-none shadow-sm appearance-none">
+                            <template x-for="opt in availableSchemes" :key="opt.val">
+                                <option :value="opt.val" x-text="opt.label"></option>
                             </template>
                         </select>
                     </div>
-                    <p class="text-xs text-blue-100 mt-1 font-bold italic" x-show="!selectedGroupForModal || selectedGroupForModal.variants.length <= 1" x-text="selectedModel?.specs"></p>
                 </div>
-                <button @click="selectedModel = null; selectedGroupForModal = null;" class="text-white hover:bg-white/20 p-2 rounded-xl transition">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-                </button>
+
+                <div class="bg-emerald-500/5 border border-emerald-500/10 p-3 rounded-xl flex justify-between items-center dark:bg-emerald-500/10">
+                    <span class="text-emerald-600 dark:text-emerald-400 text-[8px] uppercase font-black tracking-widest" x-text="calcAdvanceEmis === 0 ? 'Zero Down' : calcAdvanceEmis + ' Adv'"></span>
+                    <span class="text-lg font-black text-emerald-600 dark:text-emerald-400" x-text="'₹' + advanceDownPayment.toLocaleString('en-IN')"></span>
+                </div>
+
+                <!-- Dashboard Row -->
+                <div class="grid grid-cols-2 gap-2">
+                    <div class="bg-slate-900 p-4 rounded-xl text-white">
+                        <span class="text-blue-200 block text-[7px] font-black uppercase opacity-60">Net Loan</span>
+                        <span class="font-black text-base" x-text="'₹' + netLoanAmount.toLocaleString('en-IN')"></span>
+                    </div>
+                    <div class="bg-amber-400 p-4 rounded-xl text-slate-900 flex flex-col justify-center">
+                        <span class="text-amber-800 block text-[7px] font-black uppercase opacity-60">EMI</span>
+                        <span class="font-black text-xl" x-text="'₹' + monthlyEmi.toLocaleString('en-IN')"></span>
+                    </div>
+                </div>
             </div>
 
-            <div class="p-6 space-y-6 text-xs">
-                <div class="flex border-b border-slate-200 overflow-x-auto space-x-2 dark:border-slate-800">
-                    <button @click="activeTab = 'paper-finance'" :class="activeTab === 'paper-finance' ? 'border-b-2 border-blue-600 text-blue-600 font-bold bg-blue-50/50 rounded-t-lg dark:bg-blue-500/10' : 'text-slate-500 hover:text-slate-800 dark:text-slate-500 dark:hover:text-slate-300'" class="pb-2.5 px-3 text-xs whitespace-nowrap transition">
-                        📄 Paper Finance
-                    </button>
-                    <button @click="activeTab = 'cc-emi'" :class="activeTab === 'cc-emi' ? 'border-b-2 border-blue-600 text-blue-600 font-bold bg-blue-50/50 rounded-t-lg dark:bg-blue-500/10' : 'text-slate-500 hover:text-slate-800 dark:text-slate-500 dark:hover:text-slate-300'" class="pb-2.5 px-3 text-xs whitespace-nowrap transition">
-                        💳 Credit Card EMI
-                    </button>
-                    <button @click="activeTab = 'fullswipe'" :class="activeTab === 'fullswipe' ? 'border-b-2 border-blue-600 text-blue-600 font-bold bg-blue-50/50 rounded-t-lg dark:bg-blue-500/10' : 'text-slate-500 hover:text-slate-800 dark:text-slate-500 dark:hover:text-slate-300'" class="pb-2.5 px-3 text-xs whitespace-nowrap transition">
-                        ⚡ Full Swipe
-                    </button>
-                    <button @click="activeTab = 'upi'" :class="activeTab === 'upi' ? 'border-b-2 border-blue-600 text-blue-600 font-bold bg-blue-50/50 rounded-t-lg dark:bg-blue-500/10' : 'text-slate-500 hover:text-slate-800 dark:text-slate-500 dark:hover:text-slate-300'" class="pb-2.5 px-3 text-xs whitespace-nowrap transition">
-                        📲 UPI
-                    </button>
-                    <button @click="activeTab = 'vshield'" :class="activeTab === 'vshield' ? 'border-b-2 border-blue-600 text-blue-600 font-bold bg-blue-50/50 rounded-t-lg dark:bg-blue-500/10' : 'text-slate-500 hover:text-slate-800 dark:text-slate-500 dark:hover:text-slate-300'" class="pb-2.5 px-3 text-xs whitespace-nowrap transition">
-                        🛡️ V-Shield
-                    </button>
-                    <button @click="activeTab = 'terms'" :class="activeTab === 'terms' ? 'border-b-2 border-blue-600 text-blue-600 font-bold bg-blue-50/50 rounded-t-lg dark:bg-blue-500/10' : 'text-slate-500 hover:text-slate-800 dark:text-slate-500 dark:hover:text-slate-300'" class="pb-2.5 px-3 text-xs whitespace-nowrap transition">
-                        📋 Terms
-                    </button>
-                </div>
-
-                <div x-show="activeTab === 'paper-finance'" class="space-y-5">
-                    <div class="bg-gradient-to-r from-blue-50 to-slate-50 p-4 rounded-xl border border-slate-200 grid grid-cols-2 md:grid-cols-3 gap-4 dark:from-black/40 dark:to-black/10 dark:border-white/5">
-                        <div>
-                            <span class="text-slate-400 block text-[10px] uppercase font-semibold">Market Price (MOP)</span>
-                            <span class="text-base font-extrabold text-slate-900 dark:text-white" x-text="'₹' + selectedModel?.mop.toLocaleString('en-IN')"></span>
-                        </div>
-                        <div class="md:col-span-2">
-                            <span class="text-slate-400 block text-[10px] uppercase font-semibold">Official Bajaj Schemes (Tenure | Advance)</span>
-                            <div class="flex flex-wrap gap-1 mt-1 max-h-16 overflow-y-auto">
-                                <template x-for="sch in (selectedModel?.bajajSchemes || [])" :key="sch">
-                                    <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-blue-100 text-blue-800 dark:bg-black/60 dark:text-blue-200" x-text="sch"></span>
-                                </template>
-                            </div>
-                        </div>
+            <!-- CC EMI Content -->
+            <div x-show="activeTab === 'cc-emi'" class="space-y-4" x-transition>
+                <div class="grid grid-cols-2 gap-3">
+                    <div class="bg-white dark:bg-white/5 p-4 rounded-2xl border border-slate-200 dark:border-white/10 shadow-sm">
+                        <span class="text-slate-400 block text-[8px] uppercase font-black tracking-widest mb-1">No Cost (NCE)</span>
+                        <div class="text-[13px] font-black text-slate-900 dark:text-white" x-text="selectedModel?.ccNce"></div>
                     </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                            <label class="block font-semibold text-slate-700 mb-1.5 text-xs dark:text-slate-300">Select Paper Finance NBFC Partner:</label>
-                            <select x-model="calcPartner" @change="onPartnerChange()" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:ring-2 focus:ring-blue-500 cursor-pointer font-medium dark:bg-slate-700 dark:border-slate-600 dark:text-white">
-                                <option value="Bajaj Finance">Bajaj Finance (Official Rate Card)</option>
-                                <option value="IDFC First Bank">IDFC First Bank Consumer Loan</option>
-                                <option value="DMI Finance">DMI Finance</option>
-                                <option value="HDB Financial Services">HDB Financial Services</option>
-                                <option value="TVS Credit">TVS Credit Services</option>
-                                <option value="ICICI Bank">ICICI Bank</option>
-                                <option value="Chola">Chola (Cholamandalam)</option>
-                                <option value="Poonawalla">Poonawalla Fincorp</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block font-semibold text-slate-700 mb-1.5 text-xs dark:text-slate-300">Select Rate Card Scheme (Tenure / Advance EMIs):</label>
-                            <select x-model="calcScheme" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:ring-2 focus:ring-blue-500 cursor-pointer font-medium dark:bg-slate-700 dark:border-slate-600 dark:text-white">
-                                <template x-for="opt in availableSchemes" :key="opt.val">
-                                    <option :value="opt.val" x-text="opt.label"></option>
-                                </template>
-                            </select>
-                        </div>
-                    </div>
-
-                    <!-- Scheme Structure Info Box -->
-                    <div class="bg-blue-50/70 border border-blue-200 p-4 rounded-xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 dark:bg-black/20 dark:border-blue-800">
-                        <div>
-                            <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-blue-100 text-blue-800 uppercase tracking-wider dark:bg-black/40 dark:text-blue-300">Scheme Structure Rule</span>
-                            <h4 class="font-bold text-slate-900 text-sm mt-1 dark:text-white" x-text="calcAdvanceEmis === 0 ? 'Zero Advance / Down Payment Plan' : calcAdvanceEmis + ' Advance EMIs Required by NBFC'"></h4>
-                            <p class="text-[11px] text-slate-600 mt-0.5 dark:text-slate-400">Calculated automatically based on official August 2026 Master Rate Card format (Tenure | Advance EMIs).</p>
-                        </div>
-                        <div class="text-right sm:text-right w-full sm:w-auto bg-white p-3 rounded-lg border border-blue-100 shadow-sm dark:bg-slate-700 dark:border-blue-900">
-                            <span class="text-[10px] text-slate-400 block uppercase font-semibold">Advance Down Payment</span>
-                            <span class="text-base font-extrabold text-blue-700 dark:text-blue-400" x-text="'₹' + advanceDownPayment.toLocaleString('en-IN')"></span>
-                        </div>
-                    </div>
-
-                    <!-- IDFC Special Footer Notes -->
-                    <div x-show="calcPartner === 'IDFC First Bank'" class="bg-amber-50 border border-amber-200 p-3 rounded-xl text-[11px] text-amber-900 space-y-1 dark:bg-amber-900/10 dark:border-amber-500/20 dark:text-amber-200">
-                        <p>💡 <strong>IDFC First Bank Master Notes:</strong></p>
-                        <p>• 10|0 & 12|0 schemes available with LC EMI option. Please connect with sales representative for details.</p>
-                        <p>• 1 year EW available on 6|0, 8|0 & 10|0 schemes with ₹699 & ₹999 PF. Please connect with sales representative for details.</p>
-                    </div>
-
-                    <!-- Paper Finance Result Card -->
-                    <div class="vivo-blue text-white rounded-2xl p-5 space-y-4 shadow-md dark:bg-black">
-                        <div class="flex justify-between items-center border-b border-blue-400/30 pb-3 dark:border-slate-700">
-                            <h4 class="font-extrabold text-sm tracking-wide flex items-center space-x-2">
-                                <svg class="w-4 h-4 text-amber-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
-                                <span x-text="calcPartner + ' • Scheme Format (' + calcScheme + ') Plan'"></span>
-                            </h4>
-                            <span class="bg-white/20 text-white text-[10px] px-2.5 py-1 rounded-full font-bold">NBFC Verified</span>
-                        </div>
-
-                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs">
-                            <div class="bg-white/10 p-3 rounded-xl  dark:bg-slate-950">
-                                <span class="text-blue-200 block text-[10px] dark:text-blue-400">Net Loan Amount</span>
-                                <span class="font-extrabold text-white text-base mt-0.5 block" x-text="'₹' + netLoanAmount.toLocaleString('en-IN')"></span>
-                            </div>
-                            <div class="bg-white/10 p-3 rounded-xl  dark:bg-slate-950">
-                                <span class="text-blue-200 block text-[10px] dark:text-blue-400">Tenure / Advance</span>
-                                <span class="font-extrabold text-white text-base mt-0.5 block" x-text="calcTenure + ' Mos (' + calcAdvanceEmis + ' Adv)'"></span>
-                            </div>
-                            <div class="bg-amber-400 text-slate-900 p-3 rounded-xl shadow-sm dark:bg-amber-500">
-                                <span class="text-slate-800 font-semibold block text-[10px]">Monthly EMI</span>
-                                <span class="font-black text-slate-900 text-lg mt-0.5 block" x-text="'₹' + monthlyEmi.toLocaleString('en-IN')"></span>
-                            </div>
-                        </div>
+                    <div class="bg-white dark:bg-white/5 p-4 rounded-2xl border border-slate-200 dark:border-white/10 shadow-sm">
+                        <span class="text-slate-400 block text-[8px] uppercase font-black tracking-widest mb-1">Low Cost (LCE)</span>
+                        <div class="text-[13px] font-black text-slate-900 dark:text-white" x-text="selectedModel?.ccLce"></div>
                     </div>
                 </div>
 
-                <div x-show="activeTab === 'cc-emi'" class="space-y-4">
-                    <div class="bg-blue-50 border border-blue-200 p-4 rounded-xl text-blue-900 space-y-1 dark:bg-black/20 dark:border-blue-800 dark:text-blue-300">
-                        <h4 class="font-bold text-sm">Credit Card EMI Subvention & Cashback Matrix</h4>
-                        <p class="text-[11px] text-blue-800 leading-relaxed dark:text-blue-400">Transactions must be processed through authorized EDC terminals (Pine Labs, Benow, Innoviti, Razorpay) meeting the Minimum Swipe threshold.</p>
+                <div class="bg-blue-600 dark:bg-blue-600 p-5 rounded-[28px] text-white space-y-4 shadow-xl">
+                    <div class="flex justify-between items-center">
+                        <h4 class="text-[8px] font-black uppercase tracking-widest opacity-80">CC EMI Cashback Offer</h4>
+                        <span class="bg-white/20 px-2.5 py-1 rounded-full text-[8px] font-black uppercase">Verified</span>
                     </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-3 dark:bg-black/20 dark:border-white/5">
-                            <div class="flex items-center space-x-2 text-blue-700 dark:text-blue-400">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                                <span class="font-bold text-sm uppercase tracking-wider">No Cost EMI (NCE)</span>
-                            </div>
-                            <div>
-                                <div class="text-xl font-black text-slate-900 dark:text-white" x-text="selectedModel?.ccNce || '3m, 6m, 9m'"></div>
-                                <span class="text-[10px] text-slate-500 font-medium dark:text-slate-400">Available Tenures (0% Interest)</span>
-                            </div>
-                        </div>
-
-                        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-3 dark:bg-black/20 dark:border-white/5">
-                            <div class="flex items-center space-x-2 text-amber-600 dark:text-amber-400">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
-                                <span class="font-bold text-sm uppercase tracking-wider">Low Cost EMI (LCE)</span>
-                            </div>
-                            <div>
-                                <div class="text-xl font-black text-slate-900 dark:text-white" x-text="selectedModel?.ccLce || '12m, 18m, 24m'"></div>
-                                <span class="text-[10px] text-slate-500 font-medium dark:text-slate-400">Extended Tenure Options</span>
-                            </div>
-                        </div>
+                    <p class="text-2xl font-black tracking-tighter" x-text="selectedModel?.ccEmiCashback"></p>
+                    <div class="pt-3 border-t border-white/10">
+                        <span class="text-blue-200 block text-[8px] font-black uppercase tracking-widest mb-1.5 opacity-80">Banking Partners</span>
+                        <p class="text-[11px] font-bold leading-tight" x-text="selectedModel?.banksEmi"></p>
                     </div>
+                </div>
+            </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2 dark:bg-black/50 dark:border-slate-700">
-                            <h4 class="font-bold text-slate-900 text-sm flex items-center space-x-1.5 dark:text-white">
-                                <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
-                                <span>CC EMI Eligible Banks</span>
-                            </h4>
-                            <p class="text-xs text-slate-700 leading-relaxed font-semibold dark:text-slate-300" x-text="selectedModel?.banksEmi"></p>
-                        </div>
-                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2 dark:bg-black/50 dark:border-slate-700">
-                            <h4 class="font-bold text-slate-900 text-sm flex items-center space-x-1.5 dark:text-white">
-                                <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                                <span>CC EMI Cashback Offer</span>
-                            </h4>
-                            <p class="text-base font-extrabold text-blue-700 mt-1 dark:text-blue-400" x-text="selectedModel?.ccEmiCashback"></p>
-                        </div>
+            <!-- Full Swipe / UPI Content -->
+            <div x-show="activeTab === 'fs-upi'" class="space-y-4" x-transition>
+                <div class="bg-purple-600 dark:bg-purple-600 p-5 rounded-[28px] text-white space-y-4 shadow-xl">
+                    <div class="flex justify-between items-center">
+                        <h4 class="text-[8px] font-black uppercase tracking-widest opacity-80">Instant Cashback Engine</h4>
+                        <span class="bg-white/20 px-2.5 py-1 rounded-full text-[8px] font-black uppercase">Live</span>
                     </div>
-
-                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 grid grid-cols-2 gap-4 text-xs dark:bg-black/50 dark:border-slate-700">
-                        <div>
-                            <span class="text-slate-400 block text-[10px] dark:text-slate-500">Market Price (MOP)</span>
-                            <span class="font-bold text-slate-900 text-sm dark:text-white" x-text="'₹' + selectedModel?.mop.toLocaleString('en-IN')"></span>
-                        </div>
-                        <div>
-                            <span class="text-slate-400 block text-[10px] dark:text-slate-500">Minimum Swipe Limit (NCE)</span>
-                            <span class="font-bold text-emerald-700 text-sm dark:text-emerald-400" x-text="typeof selectedModel?.minSwipe === 'number' ? '₹' + selectedModel?.minSwipe.toLocaleString('en-IN') : selectedModel?.minSwipe"></span>
-                        </div>
+                    <p class="text-2xl font-black tracking-tighter" x-text="selectedModel?.ccFullswipeCashback"></p>
+                    <div class="pt-3 border-t border-white/10">
+                        <span class="text-purple-200 block text-[8px] font-black uppercase tracking-widest mb-1.5 opacity-80">Settlement Gateways</span>
+                        <p class="text-[11px] font-bold leading-tight" x-text="selectedModel?.banksFullswipe"></p>
                     </div>
                 </div>
 
-                <div x-show="activeTab === 'fullswipe'" class="space-y-4">
-                    <div class="bg-emerald-50 border border-emerald-200 p-4 rounded-xl text-emerald-900 space-y-1 dark:bg-emerald-900/20 dark:border-emerald-800 dark:text-emerald-300">
-                        <h4 class="font-bold text-sm">Full Swipe Instant Cashback</h4>
-                        <p class="text-[11px] text-emerald-800 leading-relaxed dark:text-emerald-400">Full Swipe offer details and eligible banks for the selected model.</p>
+                <div class="bg-white dark:bg-white/5 p-5 rounded-[28px] border-2 border-blue-600/20 shadow-xl space-y-4" x-show="selectedModel?.upiCashback && selectedModel?.upiCashback !== 'NA'">
+                    <div class="flex justify-between items-center">
+                        <span class="text-blue-600 font-black text-[9px] uppercase tracking-widest">UPI Scan & Pay Offer</span>
+                        <span class="bg-blue-600 text-white px-2 py-0.5 rounded-full text-[8px] font-black uppercase">Active</span>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2 dark:bg-black/50 dark:border-slate-700">
-                            <h4 class="font-bold text-slate-900 text-sm dark:text-white">Full Swipe Eligible Banks</h4>
-                            <p class="text-xs text-slate-700 leading-relaxed font-semibold dark:text-slate-300" x-text="selectedModel?.banksFullswipe"></p>
-                        </div>
-                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2 dark:bg-black/50 dark:border-slate-700">
-                            <h4 class="font-bold text-slate-900 text-sm dark:text-white">Full Swipe Cashback Offer</h4>
-                            <p class="text-base font-extrabold text-emerald-700 mt-1 dark:text-emerald-400" x-text="selectedModel?.ccFullswipeCashback"></p>
-                        </div>
+                    <p class="text-2xl font-black text-slate-900 dark:text-white tracking-tighter" x-text="selectedModel?.upiCashback"></p>
+                    <div class="pt-3 border-t border-slate-100 dark:border-white/5">
+                        <span class="text-slate-400 block text-[8px] uppercase font-black tracking-widest mb-1.5">Eligible Series</span>
+                        <p class="text-[11px] font-bold text-blue-600 dark:text-blue-400 leading-tight" x-text="selectedModel?.banksUpi"></p>
                     </div>
                 </div>
+            </div>
 
-                <div x-show="activeTab === 'upi'" class="space-y-4">
-                    <div class="bg-blue-50 border border-blue-200 p-4 rounded-xl text-blue-900 space-y-1 dark:bg-blue-900/20 dark:border-blue-800 dark:text-blue-300">
-                        <h4 class="font-bold text-sm">UPI Instant Cashback</h4>
-                        <p class="text-[11px] text-blue-800 leading-relaxed dark:text-blue-400">UPI offer details for the selected model. UPI availability follows the September 2026 affordability rate card.</p>
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2 dark:bg-black/50 dark:border-slate-700">
-                            <h4 class="font-bold text-slate-900 text-sm dark:text-white">UPI Eligibility</h4>
-                            <p class="text-xs text-slate-700 leading-relaxed font-semibold dark:text-slate-300" x-text="selectedModel?.banksUpi || 'Not Eligible'"></p>
-                        </div>
-                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2 dark:bg-black/50 dark:border-slate-700">
-                            <h4 class="font-bold text-slate-900 text-sm dark:text-white">UPI Cashback Offer</h4>
-                            <p class="text-base font-extrabold text-blue-700 mt-1 dark:text-blue-400" x-text="selectedModel?.upiCashback || 'NA'"></p>
-                        </div>
-                    </div>
-                </div>
+            <!-- V-Shield Content -->
+            <div x-show="activeTab === 'vshield'" class="space-y-4" x-transition>
 
-                <div x-show="activeTab === 'vshield'" class="space-y-4">
-                    <!-- Standard V-Shield Plans -->
-                    <template x-if="!vshieldPro">
-                        <div class="space-y-4">
-                            <div class="bg-amber-50 border border-amber-200 p-4 rounded-xl text-amber-900 space-y-1 dark:bg-amber-900/20 dark:border-amber-800 dark:text-amber-300">
-                                <h4 class="font-bold text-sm">V-Shield Complete Device Protection & Warranty Engine</h4>
-                                <p class="text-[11px] text-amber-800 leading-relaxed dark:text-amber-400">Comprehensive protection plans designed to safeguard your vivo device against accidental damage, liquid spills, and mechanical failures.</p>
+                <!-- Standard V-Shield Plans -->
+                <template x-if="!vshieldPro">
+                    <div class="space-y-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
+                            <!-- EW (6 MONTH) -->
+                            <div class="bg-white dark:bg-white/5 p-3 rounded-xl border border-slate-200 dark:border-white/10 shadow-sm flex flex-col justify-between">
+                                <div>
+                                    <span class="text-[7px] font-black px-1.5 py-0.5 rounded bg-blue-100 text-blue-700 uppercase dark:bg-black/40 dark:text-blue-300">EW (6M)</span>
+                                    <div class="mt-1 text-sm font-black text-slate-900 dark:text-white" x-text="'₹' + Math.round(selectedModel?.mop * 0.03).toLocaleString('en-IN')"></div>
+                                </div>
+                                <div class="mt-1 text-[7px] text-emerald-700 font-bold uppercase dark:text-emerald-400 opacity-60">No PF</div>
+                            </div>
+                            <!-- SDP (6 MONTH) -->
+                            <div class="bg-white dark:bg-white/5 p-3 rounded-xl border border-slate-200 dark:border-white/10 shadow-sm flex flex-col justify-between">
+                                <div>
+                                    <span class="text-[7px] font-black px-1.5 py-0.5 rounded bg-purple-100 text-purple-700 uppercase dark:bg-purple-900/40 dark:text-purple-300">SDP (6M)</span>
+                                    <div class="mt-1 text-sm font-black text-slate-900 dark:text-white" x-text="'₹' + Math.round(selectedModel?.mop * 0.04).toLocaleString('en-IN')"></div>
+                                </div>
+                                <div class="mt-1 text-[7px] text-emerald-700 font-bold uppercase dark:text-emerald-400 opacity-60">No PF</div>
+                            </div>
+                            <!-- EXTENDED WARRANTY (1YR) -->
+                            <div class="bg-white dark:bg-white/5 p-3 rounded-xl border border-slate-200 dark:border-white/10 shadow-sm flex flex-col justify-between">
+                                <div>
+                                    <span class="text-[7px] font-black px-1.5 py-0.5 rounded bg-blue-100 text-blue-700 uppercase dark:bg-black/40 dark:text-blue-300">EW (1Y)</span>
+                                    <div class="mt-1 text-sm font-black text-slate-900 dark:text-white" x-text="'₹' + Math.round(selectedModel?.mop * 0.06).toLocaleString('en-IN')"></div>
+                                </div>
+                                <div class="mt-1 text-[7px] text-emerald-700 font-bold uppercase dark:text-emerald-400 opacity-60">No PF</div>
+                            </div>
+                            <!-- SCREEN DAMAGE (1YR) -->
+                            <div class="bg-white dark:bg-white/5 p-3 rounded-xl border border-slate-200 dark:border-white/10 shadow-sm flex flex-col justify-between">
+                                <div>
+                                    <span class="text-[7px] font-black px-1.5 py-0.5 rounded bg-purple-100 text-purple-700 uppercase dark:bg-purple-900/40 dark:text-purple-300">SDP (1Y)</span>
+                                    <div class="mt-1 text-sm font-black text-slate-900 dark:text-white" x-text="'₹' + Math.round(selectedModel?.mop * 0.08).toLocaleString('en-IN')"></div>
+                                </div>
+                                <div class="mt-1 text-[7px] text-emerald-700 font-bold uppercase dark:text-emerald-400 opacity-60">No PF</div>
                             </div>
 
-                            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
-                                <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 flex flex-col justify-between dark:bg-slate-700 dark:border-slate-600">
+                            <!-- CDP (COMPLETE PROTECTION) -->
+                            <div class="bg-blue-50 dark:bg-black/20 p-4 rounded-2xl border border-blue-200 dark:border-blue-800 sm:col-span-2 flex flex-col justify-between">
+                                <div class="flex justify-between items-start">
                                     <div>
-                                        <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-blue-100 text-blue-700 uppercase dark:bg-black/40 dark:text-blue-300">EW (6 Month)</span>
-                                        <div class="mt-2 text-base font-extrabold text-slate-900 dark:text-white" x-text="'₹' + Math.round(selectedModel?.mop * 0.03).toLocaleString('en-IN')"></div>
-                                        <span class="text-[10px] text-slate-500 block mt-0.5 dark:text-slate-400">3% of Device MOP</span>
+                                        <span class="text-[8px] font-black px-2 py-0.5 rounded bg-blue-600 text-white uppercase tracking-widest">CDP (Full)</span>
+                                        <div class="mt-1 text-lg font-black text-blue-900 dark:text-blue-300" x-text="'₹' + Math.round(selectedModel?.mop * 0.11).toLocaleString('en-IN')"></div>
                                     </div>
-                                    <div class="mt-3 text-[10px] text-emerald-700 font-semibold bg-emerald-50 px-2 py-1 rounded border border-emerald-100 dark:bg-emerald-900/30 dark:border-emerald-800 dark:text-emerald-400">No Processing Fees</div>
-                                </div>
-
-                                <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 flex flex-col justify-between dark:bg-slate-700 dark:border-slate-600">
-                                    <div>
-                                        <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-purple-100 text-purple-700 uppercase dark:bg-purple-900/40 dark:text-purple-300">SDP (6 Month)</span>
-                                        <div class="mt-2 text-base font-extrabold text-slate-900 dark:text-white" x-text="'₹' + Math.round(selectedModel?.mop * 0.04).toLocaleString('en-IN')"></div>
-                                        <span class="text-[10px] text-slate-500 block mt-0.5 dark:text-slate-400">4% of Device MOP</span>
+                                    <div class="text-right">
+                                        <span class="text-[7px] text-slate-500 block dark:text-slate-400 uppercase font-black">PF</span>
+                                        <div class="text-sm font-black text-slate-900 dark:text-white" x-text="'₹' + getCdpPf(selectedModel?.mop).toLocaleString('en-IN')"></div>
                                     </div>
-                                    <div class="mt-3 text-[10px] text-emerald-700 font-semibold bg-emerald-50 px-2 py-1 rounded border border-emerald-100 dark:bg-emerald-900/30 dark:border-emerald-800 dark:text-emerald-400">No Processing Fees</div>
-                                </div>
-
-                                <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 flex flex-col justify-between dark:bg-slate-700 dark:border-slate-600">
-                                    <div>
-                                        <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-blue-100 text-blue-700 uppercase dark:bg-black/40 dark:text-blue-300">Extended Warranty (1Yr)</span>
-                                        <div class="mt-2 text-base font-extrabold text-slate-900 dark:text-white" x-text="'₹' + Math.round(selectedModel?.mop * 0.06).toLocaleString('en-IN')"></div>
-                                        <span class="text-[10px] text-slate-500 block mt-0.5 dark:text-slate-400">6% of Device MOP</span>
-                                    </div>
-                                    <div class="mt-3 text-[10px] text-emerald-700 font-semibold bg-emerald-50 px-2 py-1 rounded border border-emerald-100 dark:bg-emerald-900/30 dark:border-emerald-800 dark:text-emerald-400">No Processing Fees</div>
-                                </div>
-
-                                <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 flex flex-col justify-between dark:bg-slate-700 dark:border-slate-600">
-                                    <div>
-                                        <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-purple-100 text-purple-700 uppercase dark:bg-purple-900/40 dark:text-purple-300">Screen Damage (1Yr)</span>
-                                        <div class="mt-2 text-base font-extrabold text-slate-900 dark:text-white" x-text="'₹' + Math.round(selectedModel?.mop * 0.08).toLocaleString('en-IN')"></div>
-                                        <span class="text-[10px] text-slate-500 block mt-0.5 dark:text-slate-400">8% of Device MOP</span>
-                                    </div>
-                                    <div class="mt-3 text-[10px] text-emerald-700 font-semibold bg-emerald-50 px-2 py-1 rounded border border-emerald-100 dark:bg-emerald-900/30 dark:border-emerald-800 dark:text-emerald-400">No Processing Fees</div>
-                                </div>
-
-                                <div class="bg-blue-50 p-3.5 rounded-xl border border-blue-200 sm:col-span-2 flex flex-col justify-between dark:bg-black/20 dark:border-blue-800">
-                                    <div class="flex justify-between items-start">
-                                        <div>
-                                            <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-blue-600 text-white uppercase">CDP (Complete Protection)</span>
-                                            <div class="mt-2 text-lg font-extrabold text-blue-900 dark:text-blue-300" x-text="'₹' + Math.round(selectedModel?.mop * 0.11).toLocaleString('en-IN')"></div>
-                                            <span class="text-[10px] text-blue-700 block mt-0.5 dark:text-blue-400">11% of Device MOP</span>
-                                        </div>
-                                        <div class="text-right">
-                                            <span class="text-[10px] text-slate-500 block dark:text-slate-400">Processing Fee (CDP-PF)</span>
-                                            <div class="text-sm font-bold text-slate-900 dark:text-white" x-text="'₹' + getCdpPf(selectedModel?.mop).toLocaleString('en-IN')"></div>
-                                        </div>
-                                    </div>
-                                    <div class="mt-3 text-[10px] text-blue-700 font-semibold bg-white/80 px-2 py-1 rounded border border-blue-100 dark:bg-slate-950 dark:border-blue-900 dark:text-blue-300">Covers accidental & liquid damage</div>
                                 </div>
                             </div>
                         </div>
-                    </template>
+                    </div>
+                </template>
 
-                    <!-- V-Shield Pro Plans -->
-                    <template x-if="vshieldPro">
-                        <div class="space-y-4">
-                            <div class="bg-indigo-50 border border-indigo-200 p-4 rounded-xl text-indigo-900 space-y-1 dark:bg-indigo-900/20 dark:border-indigo-800 dark:text-indigo-300">
-                                <h4 class="font-bold text-sm">V-Shield Pro Premium Protection Matrix</h4>
-                                <p class="text-[11px] text-indigo-800 leading-relaxed dark:text-indigo-400">Advanced coverage with unlimited repairs and premium mechanical support.</p>
-                            </div>
+                <!-- V-Shield Pro Plans -->
+                <template x-if="vshieldPro">
+                    <div class="space-y-6">
+                        <div class="bg-indigo-50 border border-indigo-200 p-5 rounded-3xl text-indigo-900 space-y-2 dark:bg-indigo-900/20 dark:border-indigo-800 dark:text-indigo-300">
+                            <h4 class="font-black text-sm uppercase tracking-widest">V-Shield Pro Premium Protection Matrix</h4>
+                            <p class="text-[11px] text-indigo-800 leading-relaxed font-bold dark:text-indigo-400 opacity-80">Advanced coverage with unlimited repairs and premium mechanical support.</p>
+                        </div>
 
-                            <div class="overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm">
-                                <table class="w-full text-left border-collapse bg-white dark:bg-black/20">
+                        <div class="overflow-hidden rounded-[32px] border border-slate-200 dark:border-white/10 shadow-sm bg-white dark:bg-black/20">
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left border-collapse">
                                     <thead>
-                                        <tr class="bg-slate-50 dark:bg-black/50 text-[10px] font-black uppercase text-slate-400 tracking-widest border-b border-slate-200 dark:border-slate-700">
-                                            <th class="p-3">Plan</th>
-                                            <th class="p-3">Price</th>
-                                            <th class="p-3">Coverage</th>
-                                            <th class="p-3">Benefit</th>
+                                        <tr class="bg-slate-50 dark:bg-white/5 text-[9px] font-black uppercase text-slate-400 tracking-[0.2em] border-b border-slate-100 dark:border-white/5">
+                                            <th class="p-5">Plan</th>
+                                            <th class="p-5">Price</th>
+                                            <th class="p-5">Coverage</th>
+                                            <th class="p-5">Benefit</th>
                                         </tr>
                                     </thead>
-                                    <tbody class="text-[11px] divide-y divide-slate-100 dark:divide-slate-800">
-                                        <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30">
-                                            <td class="p-3 font-black text-indigo-600 dark:text-indigo-400">SDP Pro</td>
-                                            <td class="p-3 font-bold text-slate-900 dark:text-white">
-                                                <div x-text="'₹' + Math.round(selectedModel?.mop * 0.11).toLocaleString('en-IN')"></div>
-                                                <div class="text-[9px] text-slate-400">(11%)</div>
+                                    <tbody class="text-[12px] divide-y divide-slate-50 dark:divide-white/5">
+                                        <!-- SDP Pro -->
+                                        <tr class="hover:bg-slate-50/50 dark:hover:bg-white/5 transition-colors">
+                                            <td class="p-5 font-black text-indigo-600 dark:text-indigo-400 text-xs">SDP Pro</td>
+                                            <td class="p-5">
+                                                <div class="font-black text-slate-900 dark:text-white text-base" x-text="'₹' + Math.round(selectedModel?.mop * 0.11).toLocaleString('en-IN')"></div>
+                                                <div class="text-[10px] text-slate-400 font-bold">(11%)</div>
                                             </td>
-                                            <td class="p-3 text-slate-600 dark:text-slate-400">Screen & Back-Panel Damage</td>
-                                            <td class="p-3">
-                                                <div class="font-bold text-emerald-600 dark:text-emerald-400">Unlimited Repairs</div>
-                                                <div class="text-[9px] text-slate-400">1st Claim Free PF</div>
-                                            </td>
-                                        </tr>
-                                        <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30">
-                                            <td class="p-3 font-black text-blue-600 dark:text-blue-400">CDP Pro</td>
-                                            <td class="p-3 font-bold text-slate-900 dark:text-white">
-                                                <div x-text="'₹' + Math.round(selectedModel?.mop * 0.14).toLocaleString('en-IN')"></div>
-                                                <div class="text-[9px] text-slate-400">(14%)</div>
-                                            </td>
-                                            <td class="p-3 text-slate-600 dark:text-slate-400">Accidental, Physical & Liquid</td>
-                                            <td class="p-3">
-                                                <div class="font-bold text-blue-600 dark:text-blue-400">Multiple Claims</div>
-                                                <div class="text-[9px] text-slate-400">5% Processing Fee</div>
+                                            <td class="p-5 text-slate-500 dark:text-slate-400 font-bold leading-relaxed">Screen &<br>Back-Panel Damage</td>
+                                            <td class="p-5">
+                                                <div class="font-black text-emerald-600 dark:text-emerald-400 uppercase tracking-tight">Unlimited Repairs</div>
+                                                <div class="text-[10px] text-slate-400 font-bold mt-0.5">1st Claim Free PF</div>
                                             </td>
                                         </tr>
-                                        <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30">
-                                            <td class="p-3 font-black text-amber-600 dark:text-amber-400">EW Pro</td>
-                                            <td class="p-3 font-bold text-slate-900 dark:text-white">
-                                                <div x-text="'₹' + Math.round(selectedModel?.mop * 0.09).toLocaleString('en-IN')"></div>
-                                                <div class="text-[9px] text-slate-400">(9%)</div>
+                                        <!-- CDP Pro -->
+                                        <tr class="hover:bg-slate-50/50 dark:hover:bg-white/5 transition-colors">
+                                            <td class="p-5 font-black text-blue-600 dark:text-blue-400 text-xs">CDP Pro</td>
+                                            <td class="p-5">
+                                                <div class="font-black text-slate-900 dark:text-white text-base" x-text="'₹' + Math.round(selectedModel?.mop * 0.14).toLocaleString('en-IN')"></div>
+                                                <div class="text-[10px] text-slate-400 font-bold">(14%)</div>
                                             </td>
-                                            <td class="p-3 text-slate-600 dark:text-slate-400">Mechanical & Electrical</td>
-                                            <td class="p-3">
-                                                <div class="font-bold text-amber-600 dark:text-amber-400">Free Pick & Drop</div>
-                                                <div class="text-[9px] text-slate-400">+12 Months Ext</div>
+                                            <td class="p-5 text-slate-500 dark:text-slate-400 font-bold leading-relaxed">Accidental,<br>Physical & Liquid</td>
+                                            <td class="p-5">
+                                                <div class="font-black text-blue-600 dark:text-blue-400 uppercase tracking-tight">Multiple Claims</div>
+                                                <div class="text-[10px] text-slate-400 font-bold mt-0.5">5% Processing Fee</div>
+                                            </td>
+                                        </tr>
+                                        <!-- EW Pro -->
+                                        <tr class="hover:bg-slate-50/50 dark:hover:bg-white/5 transition-colors">
+                                            <td class="p-5 font-black text-amber-600 dark:text-amber-500 text-xs">EW Pro</td>
+                                            <td class="p-5">
+                                                <div class="font-black text-slate-900 dark:text-white text-base" x-text="'₹' + Math.round(selectedModel?.mop * 0.09).toLocaleString('en-IN')"></div>
+                                                <div class="text-[10px] text-slate-400 font-bold">(9%)</div>
+                                            </td>
+                                            <td class="p-5 text-slate-500 dark:text-slate-400 font-bold leading-relaxed">Mechanical &<br>Electrical</td>
+                                            <td class="p-5">
+                                                <div class="font-black text-amber-600 dark:text-amber-500 uppercase tracking-tight">Free Pick & Drop</div>
+                                                <div class="text-[10px] text-slate-400 font-bold mt-0.5">+12 Months Ext</div>
                                             </td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
-                    </template>
-                </div>
+                    </div>
+                </template>
+            </div>
 
-                <div x-show="activeTab === 'terms'" class="space-y-4 text-slate-700 leading-relaxed dark:text-slate-300">
-                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-3 dark:bg-black/50 dark:border-slate-700">
-                        <h4 class="font-bold text-slate-900 text-sm flex items-center space-x-1.5 dark:text-white">
-                            <span>September 2026 Master Rate Card Terms & Conditions</span>
-                        </h4>
-                        <div class="space-y-2 text-[11px] text-slate-600 dark:text-slate-400">
-                            <p><strong>1.</strong> 10% cashback is eligible on the swiping amount.</p><p><strong>2.</strong> SBI cashback is eligible for CC Brand EMI and CC fullswipe only on eligible models; exclusions apply to certain SBI card types and Rupay credit-card UPI transactions.</p><p><strong>3.</strong> IDFC First, Yes, BOB, DBS, Kotak, Axis and IndusInd cashback eligibility applies only to eligible models and transaction types as specified in the September rate card.</p><p><strong>4.</strong> OneCard cashback is eligible for CCEMI transactions only on eligible models.</p><p><strong>5.</strong> HDFC cashback is eligible for CC/DC/Cardless Brand EMI (6 months and above), with the applicable LCE conditions stated in the September rate card.</p><p><strong>6.</strong> Single card is eligible for one cashback from 1 Jul to 30 Sep 2026.</p><p><strong>7.</strong> Different PoS partners may have different banks live on Brand EMI; check the Brand EMI status on PoS before transacting.</p><p><strong>8.</strong> NCE means No Cost Brand EMI; LCE means Low Cost EMI; CIB means Customer Interest Bearing.</p><p><strong>9.</strong> No offer is available with ICICI, RBL or AU cards.</p><p><strong>10.</strong> UPI cashback is available only on the eligible series listed in the September rate card.</p><p><strong>11.</strong> Please void/cancel the transaction if there is any issue related to cashback.</p><p><strong>12.</strong> FREE 1 Year EW is available on V70 and V70 Elite series brand Full Swipe and UPI transactions as per the rate card.</p><p><strong>13.</strong> V70/V70 Elite special offer: ₹3000 instant cashback is available on eligible UPI and Full-swipe transactions with selected credit cards, valid till 30 Sep 2026.</p>
-                        </div>
+            <!-- Terms Content -->
+            <div x-show="activeTab === 'terms'" class="space-y-6" x-transition>
+                <div class="bg-white dark:bg-white/5 p-6 rounded-[32px] border border-slate-200 dark:border-white/10 shadow-sm">
+                    <h4 class="font-black text-slate-900 dark:text-white text-[10px] mb-4 uppercase tracking-[0.3em]">Operational Guidelines</h4>
+                    <div class="space-y-4 text-[11px] text-slate-600 dark:text-slate-400 font-bold leading-relaxed">
+                        <p class="flex items-start gap-2"><span class="w-1 h-1 bg-blue-600 rounded-full mt-1.5 shrink-0"></span> Cashback eligible only on Authorized Swipe amount via partner terminals.</p>
+                        <p class="flex items-start gap-2"><span class="w-1 h-1 bg-blue-600 rounded-full mt-1.5 shrink-0"></span> SBI cashback valid for CC EMI and Fullswipe on specified models.</p>
+                        <p class="flex items-start gap-2"><span class="w-1 h-1 bg-blue-600 rounded-full mt-1.5 shrink-0"></span> OneCard cashback restricted to CC EMI transactions only.</p>
+                        <p class="flex items-start gap-2"><span class="w-1 h-1 bg-blue-600 rounded-full mt-1.5 shrink-0"></span> No cost EMI (NCE) subvention varies by NBFC and model.</p>
+                        <p class="flex items-start gap-2"><span class="w-1 h-1 bg-blue-600 rounded-full mt-1.5 shrink-0"></span> Please verify Brand EMI status on POS before completion.</p>
                     </div>
                 </div>
-                </div>
-            </div> <!-- End of Right Details Tabs -->
-
-            <div class="bg-slate-50 px-6 py-4 border-t border-slate-200 flex justify-end dark:bg-black/50 dark:border-slate-700">
-                <button @click="selectedModel = null; selectedGroupForModal = null;" class="bg-slate-800 text-white px-5 py-2 rounded-xl text-xs font-semibold hover:bg-slate-900 transition dark:bg-blue-600 dark:hover:bg-blue-700">
-                    Close Engine
-                </button>
             </div>
+        </div>
+
+        <!-- Sticky Footer: Close Button -->
+        <div class="bg-white dark:bg-black p-5 border-t border-slate-200 dark:border-white/5 shrink-0 pb-[calc(1.25rem+env(safe-area-inset-bottom))]">
+            <button @click="selectedModel = null; selectedGroupForModal = null;"
+                    class="w-full bg-slate-900 dark:bg-blue-600 text-white py-4 rounded-2xl text-xs font-black uppercase tracking-[0.25em] shadow-2xl active:scale-[0.98] transition-transform">
+                DONE
+            </button>
         </div>
     </div>
 
-    <div x-show="showPartnerModal" class="fixed inset-0 z-50 overflow-y-auto bg-slate-900/60  flex items-center justify-center p-4" x-cloak
-         x-transition:enter="transition ease-out duration-300"
-         x-transition:enter-start="opacity-0 scale-95"
-         x-transition:enter-end="opacity-100 scale-100">
-        <div class="bg-white rounded-[32px] shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto border border-slate-200 dark:bg-slate-950 dark:border-slate-700" @click.away="showPartnerModal = false">
-            <div class="vivo-blue text-white p-5 flex justify-between items-center dark:bg-black">
-                <h3 class="text-base font-bold">Partner Guide & Bajaj Scheme Rules</h3>
-                <button @click="showPartnerModal = false" class="text-white hover:bg-white/20 p-2 rounded-xl transition">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-                </button>
+    <!-- Full Screen Partner Guide Modal for Portrait Optimization -->
+    <div x-show="showPartnerModal" class="fixed inset-0 z-[120] flex flex-col bg-slate-50 dark:bg-[#050505] overflow-hidden" x-cloak
+         x-transition:enter="transition ease-out duration-500"
+         x-transition:enter-start="opacity-0 translate-y-full"
+         x-transition:enter-end="opacity-100 translate-y-0">
+
+        <!-- Header -->
+        <div class="vivo-blue text-white p-5 shrink-0 flex justify-between items-center shadow-lg dark:bg-black pt-[calc(1.25rem+env(safe-area-inset-top))]">
+            <h3 class="text-base font-black uppercase tracking-widest">Partner Protocols</h3>
+            <button @click="showPartnerModal = false" class="bg-white/10 hover:bg-white/20 p-2.5 rounded-2xl transition-all active:scale-90">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+        </div>
+
+        <!-- Body -->
+        <div class="flex-1 overflow-y-auto p-6 space-y-6 no-scrollbar pb-[calc(80px+env(safe-area-inset-bottom))]">
+            <div class="bg-white dark:bg-white/5 p-6 rounded-[32px] border border-slate-200 dark:border-white/10 shadow-sm space-y-4">
+                <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 bg-blue-600 rounded-xl flex items-center justify-center text-white text-xs font-black">01</div>
+                    <h4 class="font-black text-slate-900 dark:text-white text-sm">Official Bajaj Scheme Format</h4>
+                </div>
+                <p class="text-xs text-slate-500 dark:text-slate-400 font-bold leading-relaxed pl-11">Bajaj Finance schemes follow the Tenure | Advance format (e.g., 24|0 = 24 Months tenure with 0 advance EMIs; 12|4 = 12 Months tenure with 4 advance EMIs). Each model variant lists its specific authorized Bajaj scheme matrix.</p>
             </div>
-            <div class="p-6 space-y-4 text-xs text-slate-600 leading-relaxed dark:text-slate-300">
-                <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-2 dark:bg-black/50 dark:border-slate-700">
-                    <h4 class="font-bold text-slate-900 text-sm dark:text-white">1. Official Bajaj Scheme Format (Tenure | Advance)</h4>
-                    <p>Bajaj Finance schemes follow the Tenure | Advance format (e.g., 24|0 = 24 Months tenure with 0 advance EMIs; 12|4 = 12 Months tenure with 4 advance EMIs). Each model variant lists its specific authorized Bajaj scheme matrix.</p>
+
+            <div class="bg-white dark:bg-white/5 p-6 rounded-[32px] border border-slate-200 dark:border-white/10 shadow-sm space-y-4">
+                <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 bg-blue-600 rounded-xl flex items-center justify-center text-white text-xs font-black">02</div>
+                    <h4 class="font-black text-slate-900 dark:text-white text-sm">Fullswipe & UPI Qualification</h4>
                 </div>
-                <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-2 dark:bg-black/50 dark:border-slate-700">
-                    <h4 class="font-bold text-slate-900 text-sm dark:text-white">2. Fullswipe & UPI Cashback Qualification</h4>
-                    <p>Fullswipe and UPI cashback schemes apply when transactions are settled through authorized partner terminals (Pine Labs, Benow, Paytm, Innoviti, Razorpay).</p>
-                </div>
-                <div class="p-4 bg-blue-50 rounded-xl border border-blue-200 space-y-2 dark:bg-black/20 dark:border-blue-800">
-                    <h4 class="font-bold text-blue-900 text-sm dark:text-blue-300">3. HDFC LCE Special Rates</h4>
-                    <p class="dark:text-blue-200">HDFC CC/DC/CL EMI Low Cost EMI (LCE) rates: 1.5% for Y Series, and 2.5% specifically for S2, X Series, and V Series models.</p>
-                </div>
+                <p class="text-xs text-slate-500 dark:text-slate-400 font-bold leading-relaxed pl-11">Fullswipe and UPI cashback schemes apply when transactions are settled through authorized partner terminals (Pine Labs, Benow, Paytm, Innoviti, Razorpay).</p>
             </div>
+
+            <div class="bg-blue-600 p-6 rounded-[32px] text-white shadow-2xl space-y-4">
+                <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 bg-white/20 rounded-xl flex items-center justify-center text-white text-xs font-black">03</div>
+                    <h4 class="font-black text-white text-sm">HDFC LCE Special Rates</h4>
+                </div>
+                <p class="text-xs font-bold leading-relaxed opacity-90 pl-11">HDFC CC/DC/CL EMI Low Cost EMI (LCE) rates: 1.5% for Y Series, and 2.5% specifically for S2, X Series, and V Series models.</p>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="bg-white dark:bg-black p-5 border-t border-slate-200 dark:border-white/5 shrink-0 pb-[calc(1.25rem+env(safe-area-inset-bottom))]">
+            <button @click="showPartnerModal = false"
+                    class="w-full bg-slate-900 dark:bg-blue-600 text-white py-4 rounded-2xl text-xs font-black uppercase tracking-[0.25em] shadow-2xl active:scale-[0.98] transition-all">
+                ACKNOWLEDGE
+            </button>
         </div>
     </div>
 
     <script>
         function rateCardApp() {
             return {
-                showSplash: true,
+                showSplash: false,
                 scrolledDown: false,
                 lastScroll: 0,
                 handleBack() {
@@ -1149,11 +820,6 @@
                     this.$watch('productRomFilter', () => this.saveState());
                     this.$watch('productSortBy', () => this.saveState());
 
-                    // Hide splash after 3 seconds
-                    setTimeout(() => {
-                        this.showSplash = false;
-                        window.scrollTo(0, 0);
-                    }, 3000);
 
                     // Expiry logic removed
                 },
@@ -11594,6 +11260,16 @@
                     this.activeTab = 'paper-finance';
                 },
 
+                getCdpPf(mop) {
+                    if (!mop) return 0;
+                    if (mop <= 20000) return 699;
+                    if (mop <= 50000) return 1499;
+                    if (mop <= 70000) return 1999;
+                    if (mop <= 100000) return 3999;
+                    if (mop <= 120000) return 5999;
+                    return 10999;
+                },
+
                 getPartnerPf(partner) {
                     const pfMap = {
                         'Bajaj Finance': 599,
@@ -11622,82 +11298,85 @@
     </div>
 
     <!-- Compare Modal -->
-    <div x-show="showCompareModal" class="fixed inset-0 z-[110] overflow-y-auto bg-slate-900/80 flex items-center justify-center p-4" x-cloak
+    <!-- Full Screen Compare Modal for Portrait Optimization -->
+    <div x-show="showCompareModal" class="fixed inset-0 z-[110] flex flex-col bg-slate-50 dark:bg-[#050505] overflow-hidden" x-cloak
          x-transition:enter="transition ease-out duration-300"
-         x-transition:enter-start="opacity-0 scale-95"
-         x-transition:enter-end="opacity-100 scale-100">
-        <div class="bg-white rounded-[40px] shadow-2xl max-w-5xl w-full max-h-[90vh] overflow-y-auto border border-slate-200 dark:bg-slate-950 dark:border-slate-700" @click.away="showCompareModal = false">
+         x-transition:enter-start="opacity-0 translate-y-full"
+         x-transition:enter-end="opacity-100 translate-y-0">
 
-            <div class="vivo-blue text-white p-6 sticky top-0 z-30 flex justify-between items-center shadow-md dark:bg-black">
-                <h2 class="text-xl font-black uppercase tracking-tighter">Compare</h2>
-                <div class="flex items-center space-x-3">
-                    <button @click="clearCompare()" class="text-[9px] font-black uppercase tracking-widest bg-red-500/20 px-3 py-1.5 rounded-xl hover:bg-red-500/40 transition border border-red-500/20">Clear</button>
-                    <button @click="showCompareModal = false" class="text-white hover:bg-white/20 p-2 rounded-xl transition">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-                    </button>
-                </div>
-            </div>
-
-            <div class="p-4 space-y-4">
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
-                    <template x-for="model in compareList" :key="model.id">
-                        <div class="bg-slate-50 dark:bg-white/5 rounded-[24px] border border-slate-200 dark:border-white/10 p-4 space-y-4 shadow-sm relative overflow-hidden">
-                            <!-- Model Header -->
-                            <div class="relative z-10">
-                                <span class="text-[8px] font-black px-2 py-0.5 rounded-full bg-blue-600 text-white uppercase tracking-widest" x-text="model.series"></span>
-                                <h3 class="text-sm font-black text-slate-900 dark:text-white mt-1 uppercase" x-text="model.name"></h3>
-                                <p class="text-[10px] font-bold text-slate-400" x-text="model.specs"></p>
-                            </div>
-
-                            <!-- Offer Matrix -->
-                            <div class="grid grid-cols-2 gap-2">
-                                <div class="bg-white dark:bg-black/40 p-2 rounded-xl border border-black/5 dark:border-white/5">
-                                    <span class="text-[8px] text-slate-400 block uppercase font-black tracking-widest">MOP</span>
-                                    <span class="font-black text-slate-900 dark:text-white text-xs" x-text="'₹' + model.mop.toLocaleString('en-IN')"></span>
-                                </div>
-                                <div class="bg-emerald-500/5 dark:bg-emerald-500/10 p-2 rounded-xl border border-emerald-500/20 dark:border-emerald-500/10">
-                                    <span class="text-[8px] text-emerald-600 dark:text-emerald-400 block uppercase font-black tracking-widest">Min Swipe</span>
-                                    <span class="font-black text-emerald-600 dark:text-emerald-400 text-xs" x-text="typeof model.minSwipe === 'number' ? '₹' + model.minSwipe.toLocaleString('en-IN') : model.minSwipe"></span>
-                                </div>
-                            </div>
-
-                            <div class="space-y-2">
-                                <div class="flex justify-between items-center py-1.5 border-b border-black/5 dark:border-white/5">
-                                    <span class="text-[9px] text-slate-500 font-bold uppercase">CC EMI</span>
-                                    <span class="text-[10px] font-black text-blue-600 dark:text-blue-400" x-text="model.ccEmiCashback"></span>
-                                </div>
-                                <div class="flex justify-between items-center py-1.5 border-b border-black/5 dark:border-white/5">
-                                    <span class="text-[9px] text-slate-500 font-bold uppercase">Fullswipe</span>
-                                    <span class="text-[10px] font-black text-purple-600 dark:text-purple-400" x-text="model.ccFullswipeCashback"></span>
-                                </div>
-                                <div class="flex justify-between items-center py-1.5 border-b border-black/5 dark:border-white/5">
-                                    <span class="text-[9px] text-slate-500 font-bold uppercase">UPI</span>
-                                    <span class="text-[10px] font-black text-emerald-600 dark:text-emerald-400" x-text="model.upiCashback || 'NA'"></span>
-                                </div>
-                                <div class="flex justify-between items-center py-1.5 border-b border-black/5 dark:border-white/5">
-                                    <span class="text-[9px] text-slate-500 font-bold uppercase">NCE Tenures</span>
-                                    <span class="text-[10px] font-black text-slate-700 dark:text-slate-300" x-text="model.ccNce"></span>
-                                </div>
-                            </div>
-
-                            <div>
-                                <span class="text-[8px] text-slate-400 block uppercase font-black tracking-widest mb-1">Bajaj Schemes</span>
-                                <div class="flex flex-wrap gap-1">
-                                    <template x-for="sch in (model.bajajSchemes || [])" :key="sch">
-                                        <span class="text-[8px] font-bold px-1.5 py-0.5 rounded bg-blue-100 text-blue-800 dark:bg-black dark:text-blue-300" x-text="sch"></span>
-                                    </template>
-                                </div>
-                            </div>
-                        </div>
-                    </template>
-                </div>
-            </div>
-
-            <div class="bg-slate-50 px-6 py-4 border-t border-slate-200 flex justify-end dark:bg-black/50 dark:border-slate-700">
-                <button @click="showCompareModal = false" class="bg-slate-900 text-white px-6 py-2.5 rounded-2xl text-[10px] font-black uppercase tracking-widest active:scale-95 transition-transform">
-                    Close
+        <!-- Header -->
+        <div class="vivo-blue text-white p-5 shrink-0 flex justify-between items-center shadow-lg dark:bg-black pt-[calc(1.25rem+env(safe-area-inset-top))]">
+            <h2 class="text-xl font-black uppercase tracking-tighter">Comparison Matrix</h2>
+            <div class="flex items-center space-x-3">
+                <button @click="clearCompare()" class="text-[9px] font-black uppercase tracking-widest bg-white/10 px-3 py-1.5 rounded-xl hover:bg-white/20 transition border border-white/10">Clear All</button>
+                <button @click="showCompareModal = false" class="bg-white/10 hover:bg-white/20 p-2.5 rounded-2xl transition-all active:scale-90">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
             </div>
+        </div>
+
+        <!-- Body -->
+        <div class="flex-1 overflow-y-auto p-5 space-y-6 no-scrollbar pb-[calc(80px+env(safe-area-inset-bottom))]">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                <template x-for="model in compareList" :key="model.id">
+                    <div class="bg-white dark:bg-white/5 rounded-[40px] border border-slate-200 dark:border-white/10 p-6 space-y-6 shadow-sm relative overflow-hidden group">
+                        <!-- Model Header -->
+                        <div class="relative z-10">
+                            <span class="text-[9px] font-black px-3 py-1 rounded-full bg-blue-600 text-white uppercase tracking-widest" x-text="model.series"></span>
+                            <h3 class="text-lg font-black text-slate-900 dark:text-white mt-2 uppercase tracking-tighter" x-text="model.name"></h3>
+                            <p class="text-[11px] font-bold text-slate-400 mt-1" x-text="model.specs"></p>
+                        </div>
+
+                        <!-- Offer Matrix -->
+                        <div class="grid grid-cols-2 gap-3">
+                            <div class="bg-slate-50 dark:bg-black/40 p-4 rounded-2xl border border-slate-100 dark:border-white/5">
+                                <span class="text-[8px] text-slate-400 block uppercase font-black tracking-widest mb-1">Market Price</span>
+                                <span class="font-black text-slate-900 dark:text-white text-base tracking-tighter" x-text="'₹' + model.mop.toLocaleString('en-IN')"></span>
+                            </div>
+                            <div class="bg-emerald-500/5 dark:bg-emerald-500/10 p-4 rounded-2xl border border-emerald-500/10">
+                                <span class="text-[8px] text-emerald-600 dark:text-emerald-400 block uppercase font-black tracking-widest mb-1">Swipe Limit</span>
+                                <span class="font-black text-emerald-600 dark:text-emerald-400 text-base tracking-tighter" x-text="typeof model.minSwipe === 'number' ? '₹' + model.minSwipe.toLocaleString('en-IN') : model.minSwipe"></span>
+                            </div>
+                        </div>
+
+                        <div class="space-y-3">
+                            <div class="flex justify-between items-center py-2.5 border-b border-slate-100 dark:border-white/5">
+                                <span class="text-[10px] text-slate-500 font-bold uppercase tracking-wider">EMI Cashback</span>
+                                <span class="text-[11px] font-black text-blue-600 dark:text-blue-400" x-text="model.ccEmiCashback"></span>
+                            </div>
+                            <div class="flex justify-between items-center py-2.5 border-b border-slate-100 dark:border-white/5">
+                                <span class="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Fullswipe</span>
+                                <span class="text-[11px] font-black text-purple-600 dark:text-purple-400" x-text="model.ccFullswipeCashback"></span>
+                            </div>
+                            <div class="flex justify-between items-center py-2.5 border-b border-slate-100 dark:border-white/5">
+                                <span class="text-[10px] text-slate-500 font-bold uppercase tracking-wider">UPI Offer</span>
+                                <span class="text-[11px] font-black text-emerald-600 dark:text-emerald-400" x-text="model.upiCashback || 'NA'"></span>
+                            </div>
+                            <div class="flex justify-between items-center py-2.5">
+                                <span class="text-[10px] text-slate-500 font-bold uppercase tracking-wider">No Cost EMIs</span>
+                                <span class="text-[11px] font-black text-slate-700 dark:text-slate-300" x-text="model.ccNce"></span>
+                            </div>
+                        </div>
+
+                        <div>
+                            <span class="text-[9px] text-slate-400 block uppercase font-black tracking-widest mb-3">Live Bajaj Schemes</span>
+                            <div class="flex flex-wrap gap-2">
+                                <template x-for="sch in (model.bajajSchemes || [])" :key="sch">
+                                    <span class="text-[9px] font-black px-2.5 py-1 rounded-lg bg-blue-50 text-blue-700 dark:bg-black dark:text-blue-300 border border-blue-100 dark:border-blue-900/30" x-text="sch"></span>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="bg-white dark:bg-black p-5 border-t border-slate-200 dark:border-white/5 shrink-0 pb-[calc(1.25rem+env(safe-area-inset-bottom))]">
+            <button @click="showCompareModal = false"
+                    class="w-full bg-slate-900 dark:bg-blue-600 text-white py-4 rounded-2xl text-xs font-black uppercase tracking-[0.25em] shadow-2xl active:scale-[0.98] transition-all">
+                EXIT COMPARE
+            </button>
         </div>
     </div>
 </body>
